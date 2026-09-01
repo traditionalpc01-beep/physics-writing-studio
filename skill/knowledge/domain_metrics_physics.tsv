@@ -1,0 +1,13 @@
+metric	symbol	unit	rule_1a_token	typical_range	notes
+external quantum efficiency	EQE	%	yes	5-35 (QLED record ~34)	report peak and average with s.d.; superlatives need citation anchor (R2006)
+current efficiency	-	cd A⁻¹	yes	5-100	report at specified luminance or current density
+luminance	L	cd m⁻²	yes	100-100000	specify peak or operating value
+turn-on voltage	V_on	V	yes	2-5	define at 1 or 10 cd m⁻²
+emission peak	λ_EL	nm	yes	400-700	deep-red ~650; deep-blue ~450
+full width at half maximum	FWHM	nm	yes	10-40	narrow linewidth is a QLED selling point
+operational lifetime	LT50 / LT95 / LT97	h	yes	10-1000	always state initial luminance (e.g. at 1000 cd m⁻²)
+current density	J	mA cm⁻²	yes	1-1000	used in J-V-L curves
+luminous efficacy	-	lm W⁻¹	yes	10-200	efficiency for lighting applications
+CIE coordinates	(x, y)	-	yes	0-1	pair with emission peak for colour purity claims
+power conversion efficiency	PCE	%	yes	10-34	PV and PeLED context
+wall-plug efficiency	WPE	%	yes	5-40	optional system-level efficiency metric

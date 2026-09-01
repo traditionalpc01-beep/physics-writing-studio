@@ -1,0 +1,86 @@
+# Methods Section — Nature Standard
+
+Goal: enable independent replication. Written in **past passive**, third-person. Methods appears LAST in Nature research articles (unusual — most journals put it second). Often subdivided with bolded subsection headers.
+
+## Architecture (typical subsection order)
+
+### Device fabrication
+- Full stack, from substrate to electrode, in deposition order.
+- `The NiOx hole-injection layers were spin-coated at 4,000 r.p.m. for 45 s and annealed at 150 °C for 10 min in air.`
+- `The NiOx precursor solution (X mg ml−1 in ethanol) was filtered (0.22 μm) before spin-coating.`
+- `The devices were transferred into a vacuum chamber (<5 × 10−4 Pa) for TPBi/LiF/Al deposition at a rate of 1 Å s−1.`
+- `In the glovebox, all the devices were encapsulated using commercially available ultraviolet-curable resin for subsequent characterization.`
+- State the processing ambient (air, N2 glovebox, O2/H2O levels) whenever it affects film quality.
+
+### Materials / Equipment
+- Reagents with vendor and purity (e.g., `nickel(II) acetylacetonate (99.9%, Sigma-Aldrich)`).
+- Equipment with model (e.g., `Keithley 2400 source meter`, `UV–vis–NIR spectrometer (PerkinElmer Lambda 950)`).
+- Software with version (e.g., `Python 3.11 with NumPy 1.26`).
+- Where the model is unknown, write `[instrument model TBD]` — never invent one.
+
+### Characterization / Data acquisition
+- Step-by-step procedure as the author would do it.
+- Parameters (spin speed, annealing temperature and time, layer thickness, deposition rate, base pressure).
+- `Electroluminescence spectra were collected using a spectrometer calibrated with a standard lamp.`
+- `The current density–luminance–voltage (J–V–L) characteristics of the QLEDs were measured on a system consisting of a source meter and an integrating sphere coupled with a calibrated spectrometer.`
+- `Transmittance and reflectance spectra were recorded using a UV–vis–NIR spectrometer [instrument model TBD].`
+- `Atomic force microscopy images were acquired using [instrument model TBD] to evaluate film roughness.`
+- Number of replicates (independently fabricated devices vs repeated scans on one device — specify).
+
+### Device statistics / Data processing
+- Software + version.
+- Test used, with reason.
+- `Device statistics were obtained from N independently fabricated devices.`
+- `EQE and luminance values are reported as mean ± s.d. across n = N devices.`
+- `P values were calculated using a two-sided X test.`
+- `T95 lifetimes were extrapolated to L0 = 1,000 cd m−2 using an acceleration factor of X.`
+- Multiple-comparison correction if applicable.
+
+### Data and code availability (REQUIRED)
+- `Data are available at [repository TBD] under accession [ID].`
+- `Source data are provided with this paper.`
+- `Custom code is available at [GitHub/Zenodo link].`
+- `Any additional information required is available from the corresponding author upon reasonable request.`
+
+## Hard rules
+
+- **Past tense throughout.** `The devices were encapsulated`, NOT `We encapsulated the devices`.
+- **Third-person passive OR first-person passive acceptable.** Both common in Nature.
+- Specify n for every measurement (n = 20 devices per condition, n = 5 spots per film, etc.).
+- Include enough detail that another lab could replicate.
+- Reference previously published methods: `as described previously1.`
+- Avoid AI-tells:
+  - `We utilized ...` → `We used ...`
+  - `Commence ...` → `Start / begin / [verb]`
+  - `It is important to note that ...` → DELETE; just state
+  - `In order to ...` → `To ...`
+
+## Anti-patterns
+
+- `We made use of ...` → `We used ...`
+- `A standard protocol was employed for ...` → `The films were processed using the protocol of Smith et al.1.` (cite)
+- `The samples were subjected to ...` (over-formal) → `The films were characterized by ...`
+- Mixing past and present tense within a paragraph.
+- Omitting device counts.
+
+## Output format
+
+Unless the user explicitly asks for JSON or a file write, return **inline Markdown** in this exact shape (no surrounding `{` `}` braces, no DOCX / .md file):
+
+```markdown
+## text
+<Nature-level prose, full version>
+
+## text_compact
+<tighter 60-70% length version>
+
+## summary
+- section: <abstract | introduction | methods | results | discussion | figure_legend | sentence | multi_section>
+- domain: <one of the 22 domain_register.tsv values, or general_nature>
+- logic_line: <1-2 sentences explaining the rewrite strategy>
+- rules_applied: [R001, R005, ...]
+- patterns_used: [P010, P013, ...]
+- ai_tells_avoided: [delve_into, navigate_complexities, ...]
+```
+
+Switch to JSON only if the user says "output as JSON" or "give me the JSON". Switch to DOCX / .md file only if the user says "save to .docx" or "write to a file". Default is inline Markdown, conversation-only.

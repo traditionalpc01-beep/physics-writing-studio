@@ -1,0 +1,98 @@
+# Results Section — Nature Standard
+
+Goal: present findings as a story, with each subsection a self-contained claim supported by figures. Subsections usually have **bolded titles** that summarize the claim (`**X drives Y by Z**`).
+
+## Per-subsection architecture
+
+1. **Lead sentence (topic):** state the finding.
+   - Template: `We find that X ... (Fig. 1a).` or `To investigate X, we ...`
+   - Physics example: `We find that devices with the passivated NiOx layer exhibit an EQE of 21.3% (Fig. 1a).`
+2. **Evidence paragraph:** describe the data, with figure anchors.
+   - `The luminance was 1.8-fold higher than in the control devices (average ± s.d. over N devices; Fig. 1a).`
+   - `The EQE showed a 2.1-fold increase relative to the reference stack (Fig. 1b).`
+3. **Controls / replication:** rule out alternative explanations.
+   - `To rule out substrate effects, we fabricated reference devices without the SAM interlayer.`
+   - `This observation was reproduced in an independent fabrication batch (n = N devices).`
+4. **Transition to next:** set up the next claim.
+   - `Having established X, we next asked whether Y.`
+
+## Multi-subsection flow
+
+- 3-5 themed subsections, each ~3-5 paragraphs.
+- Each subsection's title is a 1-line claim, not a generic label.
+  - GOOD: `**Hole-hole correlations beyond nearest neighbours**`
+  - BAD: `**Results Part 1**`
+- Build: each subsection depends on previous, ascending complexity.
+  - P1: descriptive (`We characterize X.`)
+  - P2: mechanistic (`We show X drives Y by Z.`)
+  - P3: operating-condition / lifetime (`X is required for Y under continuous driving.`)
+  - P4: implications (`These findings suggest ...`)
+
+## Hard rules
+
+- Every non-trivial claim must have a figure/data anchor.
+- Numerals for 10+; spell out 1-9.
+- Statistics inline: `(P < 0.001, two-sided t-test)` not just `(P < 0.001)`.
+- Specify n for each experiment.
+- No figure numbers like "Figure 1" — always "Fig. 1".
+- No "as shown in the figure below" — figure anchors are parenthetical only.
+- Use past tense (`We found`, `We measured`, NOT `We find`, `We measure`).
+
+## Quantitative writing
+
+| Pattern | Example |
+|---|---|
+| Fold change | `The passivated devices showed a 2.4-fold increase in lifetime relative to controls (average ± s.d. over 30 devices).` |
+| Proportion | `The EQE exceeded 20% in 24 of 30 devices (80%).` |
+| Correlation | `EQE correlated inversely with leakage current (r = −0.82, N = 30 devices).` |
+| Effect size | `The interlayer reduced the leakage current by 47% (95% CI 32–58%).` |
+| Device statistics | `average ± s.d. over N devices; state N and define error bars in the legend (exact P values are uncommon in device physics)` |
+
+## Anti-patterns in Results
+
+- `Interestingly, ...` (overused; remove unless truly striking)
+- `Surprisingly, we found ...` (subjective; show via data)
+- `As expected, ...` (vague; state what was expected)
+- `Notably, ...` (use sparingly; once per section max)
+- Repeating abstract findings verbatim — paraphrase in fresh language
+- Long methods recap inside Results — refer to Methods section
+
+## v3 TSV priors
+
+Calibrate against these v3 deterministic TSVs from 412 Nature papers:
+- knowledge/results_discussion_openers.tsv (results rows) - open each results subsection with a calibrated template; top entry "To characterize X, we performed Y" (12 papers), then "We found that X"
+- knowledge/opener_distribution.tsv (results rows) - first 3-gram per sentence opener
+- knowledge/hedge_verbs.tsv - causal verb tier (demonstrate/show/identify 1379/401 for show); downshift to associative ("suggest" / "consistent with") when describing own data with limitations
+- knowledge/cross_section_linkers.tsv (results -> discussion rows) - final results paragraph transition to discussion; "These results suggest that X" (26 papers)
+
+
+
+## Output format
+
+Unless the user explicitly asks for JSON or a file write, return **inline Markdown** in this exact shape (no surrounding `{` `}` braces, no DOCX / .md file):
+
+```markdown
+## text
+<Nature-level prose, full version>
+
+## text_compact
+<tighter 60-70% length version>
+
+## summary
+- section: <abstract | introduction | methods | results | discussion | figure_legend | sentence | multi_section>
+- domain: <one of the 22 domain_register.tsv values, or general_nature>
+- logic_line: <1-2 sentences explaining the rewrite strategy>
+- rules_applied: [R001, R005, ...]
+- patterns_used: [P010, P013, ...]
+- ai_tells_avoided: [delve_into, navigate_complexities, ...]
+```
+
+Switch to JSON only if the user says "output as JSON" or "give me the JSON". Switch to DOCX / .md file only if the user says "save to .docx" or "write to a file". Default is inline Markdown, conversation-only.
+
+## Transitions between subsections
+
+- `Having established X, we next asked whether Y.`
+- `Building on these observations, we tested ...`
+- `We next examined ...`
+- `Given that X, we hypothesized that Y.`
+- `To test whether X, we ...`

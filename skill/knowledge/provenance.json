@@ -1,0 +1,160 @@
+{
+  "generated": "2026-07-21",
+  "source": {
+    "distill_logs": "E:\\公众号\\#vibeCode_project\\03nature_studio_skill\\nature-writing-build\\work\\distill_logs.jsonl",
+    "adversarial_logs": "E:\\公众号\\#vibeCode_project\\03nature_studio_skill\\distillation\\v2\\logs\\adversarial.jsonl"
+  },
+  "n_observation_rows": 657,
+  "n_adversarial_rows": 30,
+  "tsvs": {
+    "writing_rules.tsv": {
+      "rows": 97,
+      "distilled_added": 25,
+      "prior_retained": 60,
+      "domain_seed_local_added": 6,
+      "physics_distilled": 24,
+      "device_seed": 10
+    },
+    "phrase_bank.tsv": {
+      "rows": 57,
+      "distilled_added": 12,
+      "prior_retained": 0,
+      "physics_distilled": 40,
+      "device_seed": 11,
+      "domain_seed_local_added": 6
+    },
+    "anti_ai_patterns.tsv": {
+      "rows": 144,
+      "physics_adversarial": 12,
+      "calibrated": [
+        "A2000"
+      ]
+    },
+    "domain_register.tsv": {
+      "rows": 2,
+      "physics_optoelectronics_papers": 189
+    },
+    "paper_story_patterns.tsv": {
+      "rows": 5
+    },
+    "sentence_stats_by_domain.tsv": {
+      "rows": 2
+    },
+    "gap_transitions.tsv": {
+      "rows": 1532
+    },
+    "opener_distribution.tsv": {
+      "rows": 5942,
+      "per_paper": 31.4
+    },
+    "cross_section_linkers.tsv": {
+      "rows": 725
+    },
+    "hedge_verbs.tsv": {
+      "rows": 134
+    },
+    "results_discussion_openers.tsv": {
+      "rows": 2002,
+      "per_paper": 10.6
+    }
+  },
+  "v2_1_0_domain_seed": "physics_optoelectronics register seeded 2026-08-31; distilled to 27 papers same day, see PROVENANCE.md",
+  "physics_corpus_v2_1_1": {
+    "papers": 27,
+    "journals": {
+      "Nature Communications": 16,
+      "Light Sci Appl": 8,
+      "Nature": 1,
+      "Nature Electronics": 1,
+      "Nature Materials": 1
+    },
+    "increments": {
+      "opener_distribution": "+220",
+      "gap_transitions": "+227",
+      "hedge_verbs": "+8",
+      "cross_section_linkers": "+97",
+      "results_discussion_openers": "+23"
+    }
+  },
+  "physics_corpus_v2_2_0": {
+    "papers": 111,
+    "rounds": {
+      "r1_general": 50,
+      "B_niox_hil_sam_wf_cbal": 19,
+      "C_tmo_doping_solution_alhtl": 19,
+      "D_inverted_qdfilm_peled_passivation": 23
+    },
+    "final_rows": {
+      "opener_distribution": 11168,
+      "gap_transitions": 2577,
+      "hedge_verbs": 133,
+      "cross_section_linkers": 2190,
+      "results_discussion_openers": 4957
+    }
+  },
+  "physics_pivot_v3_0_0": {
+    "date": "2026-09-01",
+    "deleted_bio_rows": 18863,
+    "final_rows": {
+      "writing_rules.tsv": 91,
+      "phrase_bank.tsv": 51,
+      "anti_ai_patterns.tsv": 136,
+      "domain_register.tsv": 2,
+      "paper_story_patterns.tsv": 5,
+      "sentence_stats_by_domain.tsv": 2,
+      "opener_distribution.tsv": 738,
+      "gap_transitions.tsv": 909,
+      "cross_section_linkers.tsv": 424,
+      "hedge_verbs.tsv": 133,
+      "results_discussion_openers.tsv": 769
+    },
+    "rollback": "skill-backups/nature-writing-studio-v2.2.0-pre-physics-pivot/"
+  },
+  "v3_1_0": {
+    "papers": 136,
+    "final_rows": {
+      "writing_rules.tsv": 91,
+      "phrase_bank.tsv": 51,
+      "anti_ai_patterns.tsv": 144,
+      "domain_register.tsv": 2,
+      "paper_story_patterns.tsv": 5,
+      "sentence_stats_by_domain.tsv": 2,
+      "opener_distribution.tsv": 4264,
+      "gap_transitions.tsv": 1120,
+      "cross_section_linkers.tsv": 521,
+      "hedge_verbs.tsv": 134,
+      "results_discussion_openers.tsv": 1423
+    },
+    "adversarial": {
+      "samples": 24,
+      "new_patterns": 8,
+      "false_positives_excluded": 8
+    }
+  },
+  "v3_2_0": {
+    "papers": 175,
+    "final_rows": {
+      "writing_rules.tsv": 91,
+      "phrase_bank.tsv": 51,
+      "anti_ai_patterns.tsv": 144,
+      "domain_register.tsv": 2,
+      "paper_story_patterns.tsv": 5,
+      "sentence_stats_by_domain.tsv": 2,
+      "opener_distribution.tsv": 5503,
+      "gap_transitions.tsv": 1422,
+      "cross_section_linkers.tsv": 669,
+      "hedge_verbs.tsv": 134,
+      "results_discussion_openers.tsv": 1836
+    },
+    "keywords_rounds": {
+      "R1_metrics": 20,
+      "R2_materials": 19
+    }
+  },
+  "physics_corpus": {
+    "papers": 189,
+    "rounds": "r1 50 + rB 19 + rC 19 + rD 23 + colour/perovskite/QD-physics/NiOx 25 + v3.2 keyword 39 + v3.3 gap-fill 14 + dedup",
+    "manifest": "workspace/merged_papers.txt",
+    "holdout": 1
+  }
+}

@@ -1,0 +1,103 @@
+# Figure Legend — Nature Standard
+
+Goal: standalone, scannable, complete. Reader should understand the figure without seeing it.
+
+## Architecture
+
+```
+Fig. N | Title-Case Headline Statement Summarizing What Is Shown.
+
+a, Description of panel a. Specific finding with quantitative anchor.
+b, Description of panel b. Specific finding with quantitative anchor.
+c, Description of panel c. Specific finding with quantitative anchor.
+
+Device statistics were obtained from n = N independently fabricated devices.
+Data are mean ± s.d. Error bars, s.d. over N = 20 devices.
+P values by two-sided Student's t-test where applied. Scale bar, 200 nm (TEM).
+```
+
+## Rules
+
+### Headline (after `Fig. N |`)
+- Sentence-case or Title Case (Nature uses Title Case).
+- One phrase summarizing the figure, NOT a generic label.
+- GOOD: `Fig. 1 | SAM-treated NiOx enables efficient hole injection in inverted QLEDs.`
+- BAD: `Fig. 1 | Results.`
+- BAD: `Fig. 1 | The EQE of the devices.`
+
+### Panel descriptions
+- Lowercase letter + period + space + description.
+- Each panel: what is shown, key quantitative result, statistical test if applicable.
+- Start each panel with action verb in past tense (`Shown is`, `Plotted are`, `Measured`) or noun phrase (`Device schematic of ...`, `EL spectra of ...`, `J–V–L characteristics of ...`, `EQE versus luminance of ...`).
+- Avoid: `As shown in panel a, ...` — the panel label `a,` already signals what follows.
+
+### Quantitative anchors (every panel where applicable)
+- n value: `n = 20 independently fabricated devices`, `N = 100 QDs per size histogram`.
+- Statistics: `P = 0.003`, `two-sided t-test`.
+- Error bar: `mean ± s.d.`, `Error bars, s.d. over N = 20 devices`.
+- Scale bar for film/device micrographs: `Scale bar, 200 nm (TEM).` Micrometre-scale bars (for example, `Scale bar, 5 μm`) are reserved for SEM or optical morphology images.
+
+### Layout
+- Each figure caption is ~50-150 words (multi-panel: up to 300 words).
+- End with stats, scale bars, and any abbreviations defined inline.
+- ONE figure = ONE caption. Extended Data Figs have separate captions but follow same format.
+
+## Anti-patterns
+
+- `This figure shows the results of X.` (vague)
+- `As can be seen from panel a, ...` (AI-tell)
+- `For more details, see the text.` (figure must be standalone)
+- Generic labels like `Fig. 1 | Device data.`
+- Burying stats in figure rather than caption
+- Repeating the title in the panel descriptions
+
+## Examples
+
+GOOD:
+```
+Fig. 1 | Passivated NiOx hole-injection layers enable efficient inverted QLEDs.
+
+a, Device schematic and energy-level diagram of the inverted QLED with the
+   SAM-treated NiOx hole-injection layer.
+b, Cross-sectional TEM image of the NiOx/QD interface; the passivated layer
+   is X nm thick.
+c, Electroluminescence spectra of control and passivated devices at a
+   current density of X mA cm−2.
+d, Current density–luminance–voltage (J–V–L) characteristics; the
+   passivated device turns on X V lower than the control.
+e, EQE versus luminance; the peak external quantum efficiency reaches X%.
+
+Error bars, s.d. over N = 20 independently fabricated devices.
+Scale bar, 200 nm (TEM, panel b).
+```
+
+BAD:
+```
+Fig. 1 | Results of device performance.
+
+This figure shows the device performance. Panel a is the schematic. Panel b
+is the EL spectrum. Panel c is the J–V–L curve. As can be seen, the
+passivated device is better.
+```
+
+## Output format
+
+Unless the user explicitly asks for JSON or a file write, return **inline Markdown** in this exact shape (no surrounding `{` `}` braces, no DOCX / .md file):
+
+```markdown
+## text
+<Nature-level prose, full version>
+
+## text_compact
+<tighter 60-70% length version>
+
+## summary
+- section: <abstract | introduction | methods | results | discussion | figure_legend | sentence | multi_section>
+- domain: <one of the 22 domain_register.tsv values, or general_nature>
+- logic_line: <1-2 sentences explaining the rewrite strategy>
+- rules_applied: [R001, R005, ...]
+- patterns_used: [P010, P013, ...]
+- ai_tells_avoided: [delve_into, navigate_complexities, ...]
+```
+
+Switch to JSON only if the user says "output as JSON" or "give me the JSON". Switch to DOCX / .md file only if the user says "save to .docx" or "write to a file". Default is inline Markdown, conversation-only.

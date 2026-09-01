@@ -1,0 +1,145 @@
+﻿name: physics-writing-studio
+display_name: Physics Writing Studio (Nature style)
+description: |
+  把物理/材料/QLED 领域科学文本（中文或英文）改写成 Nature Portfolio 风格英文。v3.0.0 完成物理领域转向：知识库基于 189 篇 Nature 系物理论文（QLED/量子点/PeLED/micro-LED/OLED/半导体/NiOx 空穴注入层）蒸馏，生物领域数据已清理。支持 Nature 风格润色、中译英、去 AI 味、按章节改写（摘要/前言/方法/结果/讨论/图例/单句）、整稿 multi_section 编排。器件统计规范（average ± s.d. over N devices）与指标验证词表（EQE/luminance/LT95/turn-on voltage）强制证据锚定。返回正文+精简版+改写说明。
+version: 3.3.0
+status: stable
+entry: SKILL.md
+
+prompt_version: v3.3.0
+rule_set_version: v3.3.0-97rules
+knowledge_version: v3.3.0
+distillation_date: 2026-08-13
+llm_backend: MiniMax-M3
+
+instructions: |
+  1. 读 SKILL.md 拿到调用契约与输出约定。
+  2. 读 prompts/system_writer.txt 看操作原则与 24 行每域真实句长（先验而非硬约束）。
+  3. 读 prompts/style_guide.txt 看速查清单。
+  4. 读 prompts/sections/<target>.txt 拿目标章节的专用规则（multi_section 走 prompts/sections/multi_section.txt 编排器）。
+  5. 按需加载知识库：
+     - 必加: knowledge/writing_rules.tsv (97 条, 含 R2000-R2009 器件规则与 R3100-R3105 溅射工艺规则) + cross_section_rules.tsv (10 条 v2.0.1) + anti_ai_patterns.tsv (144 条, 含 16 critical + 114 high; A2000 已按语料实测校准)
+     - 选加: phrase_bank.tsv (57 句, 含 P2000-P2010 器件短语与 P3100-P3105 溅射工艺短语) / domain_register.tsv (含 physics_optoelectronics, 189 papers) / paper_story_patterns.tsv (12 种 SP 模板) / sentence_stats_by_domain.tsv (24 域)
+     - v3 确定型蓄知（MiniMax-M3 逐篇观察 412 篇 Nature 论文、LCS 校验、spot-check 18/18）：
+         * knowledge/gap_transitions.tsv — 1532 个 gap 句模板按 (section, pivot_word) 索引，abstract/introduction 设立使用者发现时取 pivot 词
+         * knowledge/opener_distribution.tsv — 5942 个句开头 3-gram，按 section 选取常用 opener（abstract: "here we" 279 papers, "we find", "these results"）
+         * knowledge/cross_section_linkers.tsv — 725 个节间衔接模板（intro->results: "Having established X, we next asked whether Y" 50 papers；蒸馏源 414 篇 Nature paper paragraph-level bridge, agent-extracted）
+         * knowledge/hedge_verbs.tsv — 134 个 verb-tier 簇，强制 causal/associative/speculative 三档实践（suggest 1645/409 papers, show 1379/401 papers）
+         * knowledge/results_discussion_openers.tsv — 2002 个 results/discussion 首句模板
+  6. 按目标章节架构与 hedge 三档改写输入文本。
+  7. 改写后扫描 anti_ai_patterns.tsv，命中 16 条 critical + 114 条 high 黑名单立即替换或删除。
+  8. 输出正文 + 精简版 + 改写说明，自然对话不输出 JSON 包装。
+
+constraints:
+  - 不编造具体数字；用户没写就标 [TBD]。
+  - 不编造引用；用 [1]、[2] 占位。
+  - 不使用 anti_ai_patterns.tsv 中的任何短语。
+  - 不以"In this paper" / "In this study" / "The authors" / "In recent years" 开头。
+  - 不以"More work is needed" / "Future studies will" / "In conclusion" 收尾。
+  - 不用第一人称单数 I。
+  - 不用感叹号。
+  - 不把"novel" / "previously uncharacterized" / "unique" 在同一篇里用超过 1 次。
+  - 按证据强度 hedge：强证据 → demonstrate / show；关联 → consistent with / in line with；推测 → may / could。
+  - 每个非平凡断言必须挂图 / 数据锚定，或标 [Fig. X 待分配]。
+
+knowledge_summary:
+  writing_rules:
+    rows: 97
+    prior_retained: 60
+    distilled_added: 25
+    domain_seed_added: 10
+    domain_seed_local_added: 6  # R3100-R3105 sputtering, local PDFs ph5c01512/el5c01793
+    categories: 14
+  phrase_bank:
+    rows: 57
+    prior_retained: 0
+    distilled_added: 12
+    domain_seed_added: 11
+    domain_seed_local_added: 6  # P3100-P3105 sputtering
+    slots: 7
+  anti_ai_patterns:
+    rows: 144
+    prior_retained: 132
+    adversarial_added: 3
+    severity: {critical: 29, high: 100+, low: few}
+  domain_register:
+    rows: 2
+    prior_retained: 22
+    distilled_added: 24
+    domain_seed_added: 1
+  paper_story_patterns:
+    rows: 5
+  sentence_stats_by_domain:
+    rows: 2
+    note: physics_optoelectronics row added 2026-09-01 from 111-paper corpus (mean 24.6, median 23, p95 45)
+  domain_metrics_physics:
+    rows: 12
+    note: v2.1.0 Rule 1a device-metric vocabulary (EQE, luminance, LT50/95, FWHM, CIE)
+  v3_deterministic:
+    source_papers: 412
+    extraction_method: MiniMax-M3 per-paper observation of .evidence_packet.md
+    validation: LCS-based quote substring (ratio >= 0.5)
+    spot_check_pass_rate: "18/18 (100%)"
+    gap_transitions: {rows: 1532, pivots: [although, however, but, yet, while, whereas, despite, nevertheless]}
+    opener_distribution: {rows: 5942, top: "here we in abstract (387 occurrences / 279 papers)"}
+    cross_section_linkers: {rows: 725, top: "Having established X, we next asked whether Y (intro->results, 50 papers)"}
+    hedge_verbs: {rows: 134, tiers: [causal, associative, speculative]}
+    results_discussion_openers: {rows: 2002}
+
+distillation_provenance:
+  source_papers: 750
+  successfully_extracted: 657
+  coverage_pct: 87.6
+  failed_persistent: 93
+  adversarial_sample_size: 30
+  adversarial_divergences: 311
+  adversarial_breakdown: {critical: 40, high: 127, minor: 124}
+  prior_rules_total: 348
+  prior_retained: 348
+  v3_layer:
+    deterministic_ai: MiniMax-M3 per-paper observation of 412 Nature papers
+    evidence_input: 750 .evidence_packet.md files in nature-writing-build/work/papers_clean/
+    llm_endpoint: /v1/responses (wire_api=responses)
+    driver: distillation/v2/scripts/deterministic_distill.py
+    aggregator: distillation/v2/scripts/aggregate_deterministic.py
+    spot_check: distillation/v2/scripts/spot_check_quotes.py (18/18 passed)
+    output: 5 TSVs (gap_transitions/opener_distribution/cross_section_linkers/hedge_verbs/results_discussion_openers)
+    knowledge_layer: v3 probabilistic priors on top of v2.0.1 deterministic rules
+  physics_corpus_v3_3_0:
+    papers: 189 OA Nature-family, cumulative over 7 directed subagent rounds (2026-08-31/09-01)
+    v3_3_gapfill: +14 (lifetime T50/LT95/T80 5, current/power efficiency 3, NiOx film characterization 4, Communications Physics first entries 2)
+    v3_3_local_seed: R3100-R3105 + P3100-P3105 sputtering Methods from local PDFs ph5c01512/el5c01793 (evidence=domain_seed_local); A2000 calibrated (metric-accompanied "excellent device performance" allowed, bare form banned)
+    caliber: opener occ>=2 OR top5-per-paper-section (31.4/paper); rd 10.6/paper; gap/linker representative-first-sentence
+    method: subagent collection (paywall/OA verified) + scripts/distill_physics_corpus.py + merge_physics.py + rebuild_openers.py
+    doi_manifest: workspace/merged_papers.txt (189); zero cross-agent dups; holdout 1 paper reserved
+  physics_corpus_v2_2_0:
+    papers: 111 OA Nature-family, collected in 4 directed rounds (2026-08-31)
+    rounds: r1 general QLED/device 50 -> rB NiOx-HIL/SAM/workfunction/charge-balance 19 -> rC TMO-physics/doping/solution-oxide/alt-HTL 19 -> rD inverted-QLED/QD-film-interface/PeLED-hole-side/oxide-passivation 23
+    method: subagent collection (paywall/OA verified) + scripts/distill_physics_corpus.py + merge_physics.py (count-increment; opener-class appends pc>=2; gap/linker representative first sentences)
+    spot_check: gap 25/25 r1; linkers 14/15 r1; final re-audit below
+    final_spot_check: see PROVENANCE.md v2.2.0
+  aggregation_threshold_paper_count: 3
+  similarity_metric: jaccard_token_set
+  sub_agent_available: false
+  validation: deterministic_python
+
+required_files:
+  - SKILL.md
+  - prompts/system_writer.txt
+  - prompts/style_guide.txt
+  - prompts/sections/<target>.txt
+  - knowledge/writing_rules.tsv
+  - knowledge/phrase_bank.tsv
+  - knowledge/anti_ai_patterns.tsv
+  - knowledge/domain_register.tsv
+  - knowledge/paper_story_patterns.tsv
+  - knowledge/sentence_stats_by_domain.tsv
+  - knowledge/provenance.json
+  - knowledge/PROVENANCE.md
+  - knowledge/gap_transitions.tsv
+  - knowledge/opener_distribution.tsv
+  - knowledge/cross_section_linkers.tsv
+  - knowledge/hedge_verbs.tsv
+  - knowledge/results_discussion_openers.tsv
+  - knowledge/inter_section_argue_chains.tsv  # v3.1 proto seed (21 rows, derived from cross_section_linkers + hedge_verbs v3_deterministic)
+
