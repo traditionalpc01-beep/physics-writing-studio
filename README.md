@@ -12,9 +12,18 @@
 
 由 [mumdark/nature-writing-studio](https://github.com/mumdark/nature-writing-studio) v2.x **转向纯物理领域**（QLED / 量子点）的衍生改版 · 知识库基于 189 篇 Nature 系开放获取物理论文重新蒸馏
 
-[快速开始](#-快速开始) · [它能做什么](#-它能做什么) · [它是怎么工作的](#-它是怎么工作的通俗版) · [常见问题](#-常见问题) · [引用](#-引用) · [致谢](#-致谢) · [License](#-license)
+[快速开始](#-快速开始) · [它能做什么](#-它能做什么) · [它是怎么工作的](#-它是怎么工作的通俗版) · [常见问题](#-常见问题) · [引用](#-引用) · [License](#-license)
 
 </div>
+
+---
+
+## 🙏 致谢
+
+- **[mumdark/nature-writing-studio](https://github.com/mumdark/nature-writing-studio)** —— 项目的起点。Verification Layer 校验体系（Rule 1a 硬溯源 / Rule 2 破折号零容忍 / Rule 3 删改）、hedge 三档证据分级、多节编排接口与整套蒸馏方法论，全部继承自其 v2.x 设计；
+- **上游 v2.x 的原始蒸馏工作**——逐篇观察 412 篇 Nature 论文、LCS 引文校验 18/18 通过，本项目的物理知识库方法论直接受益于此；
+- **189 篇开放获取论文的作者们**——没有你们把器件数据和方法细节写得清清楚楚，就没有这个素材库；
+- **ZCode / OpenAI Codex 生态**——skill 的运行时与子代理采集流水线载体。
 
 ---
 
@@ -151,13 +160,6 @@
 ```
 
 > 📚 **语料说明**：知识库引文均溯源至 189 篇开放获取论文（逐行 DOI 见 `skill/knowledge/provenance.json`）。论文全文受出版社版权保护，**本仓库不存储、不再分发任何论文全文**，仅包含句式级引文摘录。
-
-## 🙏 致谢
-
-- **[mumdark/nature-writing-studio](https://github.com/mumdark/nature-writing-studio)** —— 项目的起点。Verification Layer 校验体系（Rule 1a 硬溯源 / Rule 2 破折号零容忍 / Rule 3 删改）、hedge 三档证据分级、多节编排接口与整套蒸馏方法论，全部继承自其 v2.x 设计；
-- **上游 v2.x 的原始蒸馏工作**——逐篇观察 412 篇 Nature 论文、LCS 引文校验 18/18 通过，本项目的物理知识库方法论直接受益于此；
-- **189 篇开放获取论文的作者们**——没有你们把器件数据和方法细节写得清清楚楚，就没有这个素材库；
-- **ZCode / OpenAI Codex 生态**——skill 的运行时与子代理采集流水线载体。
 
 ## 📜 License
 
